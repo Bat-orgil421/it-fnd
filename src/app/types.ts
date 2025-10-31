@@ -1,0 +1,34 @@
+export type User = {
+  _id: string;
+  username: string;
+  fullname: string;
+  password: string;
+  profileimg: string;
+
+  email: string | null;
+  phone: string | null;
+};
+
+export type PostComment = {
+  _id: string;
+  text: string;
+  createdAt: string;
+  createdBy: User;
+};
+
+export type PostLike = {
+  _id: string;
+  createdAt: string;
+  createdBy: User;
+};
+
+export type Post = {
+  some(arg0: (post: any) => boolean): import("react").SetStateAction<Post>;
+  _id: string;
+  imageUrl: string;
+  description: string;
+  createdAt: string;
+  createdBy: User;
+  comments: PostComment[];
+  likes: PostLike[];
+};
