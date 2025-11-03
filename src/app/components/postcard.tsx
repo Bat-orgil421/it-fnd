@@ -43,7 +43,7 @@ export const PostCard = ({ post }: { post: Post }) => {
   return (
     <div key={post._id} className="py-4 border-b border-zinc-800">
       <div className="flex py-2 flex items-center">
-        <img src="" alt="" className="bg-white w-9 h-9 rounded-full mr-2" />
+        {/* <img src="" alt="" className="bg-white w-9 h-9 rounded-full mr-2" /> */}
         <Link href={`/${post.createdBy.username}`}>
           <div className="font-bold">{post.createdBy.username}・</div>
         </Link>
