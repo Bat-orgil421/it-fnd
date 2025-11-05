@@ -9,6 +9,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "../providers/UserProvider";
 import { redirect } from "next/navigation";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const SingInPage = () => {
   const { user, setToken } = useContext(UserContext);
@@ -94,10 +95,10 @@ const SingInPage = () => {
             </Button>
             <div className="text-sm/6">
               Do not have an account?{" "}
-              <a href="/SignUp" className="text-blue-500">
+              <Link href="/SignUp" className="text-blue-500">
                 {" "}
                 Sign up
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -6,13 +6,12 @@ import { CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeClosed } from "lucide-react";
 import { useContext, useState } from "react";
-import { toast } from "sonner";
 import { UserContext } from "../providers/UserProvider";
 import { redirect } from "next/navigation";
 import axios from "axios";
 
 const SingInPage = () => {
-  const { user, setToken } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const [passwordShown, setPasswordShown] = useState(false);
   const [credential, setCredential] = useState("");

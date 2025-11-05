@@ -8,7 +8,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useUser } from "../providers/UserProvider";
 import Image from "next/image";
 import { useAxios } from "../hooks/useaxios"
 
@@ -23,7 +22,6 @@ const Page = () => {
 
   const axios = useAxios();
   const router = useRouter();
-  const { token } = useUser();
 
   const generateImage = async () => {
     try {

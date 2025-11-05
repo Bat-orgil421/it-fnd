@@ -23,7 +23,6 @@ export type PostLike = {
 };
 
 export type Post = {
-  some(arg0: (post: any) => boolean): import("react").SetStateAction<Post>;
   _id: string;
   imageUrl: string;
   description: string;

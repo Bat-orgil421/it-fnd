@@ -6,6 +6,7 @@ import { useAxios } from "../hooks/useaxios";
 import { Post, User } from "../types";
 import { useUser } from "../providers/UserProvider";
 import Link from "next/link";
+import { Heart, MessageCircle } from "lucide-react";
 
 const Page = ({ post }: { post: Post }) => {
   const { username } = useParams();
@@ -18,6 +19,26 @@ const Page = ({ post }: { post: Post }) => {
 
   const axios = useAxios();
   const { user: currentUser } = useUser();
+
+  useEffect(() => {
+    if (!username) return;
+
+    const fetchProfile = async () => {
+      try {
+        const userRes = await axios.get(`/users/${username}`);
+        setUsere(userRes.data);
+        const postRes = await axios.get<Post[]>(`/posts/users/${username}`);
+        setPosts(postRes.data);
+      } catch (err: any) {
+        if (err.response?.status === 404) setIsNotFound(true);
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [username]);
 
   useEffect(() => {
     axios
@@ -89,7 +110,46 @@ const Page = ({ post }: { post: Post }) => {
             )}
           </div>
         </div>
+        <div className="flex justify-center mt-8 px-2">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 justify-center">
+            {posts.length > 0 ? (
+              posts.map((post) => (
+                <div
+                  key={post._id}
+                  className="relative rounded-xl overflow-hidden group border-3 border-stone-600 hover:border-white cursor-pointer w-[150px] h-[150px] sm:w-[160px] sm:h-[160px] md:w-[180px] md:h-[180px]"
+                  onClick={() => setSelectedPost(post)}
+                >
+                  <img
+                    src={post.imageUrl}
+                    alt="Post image"
+                    width={400}
+                    height={400}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
 
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 text-white">
+                    <div className="flex items-center gap-1">
+                      <Heart className="w-5 h-5 fill-white" />
+                      <span className="text-sm font-semibold">
+                        {post.likes?.length ?? 0}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <MessageCircle className="w-5 h-5 fill-white" />
+                      <span className="text-sm font-semibold">
+                        {post.comments?.length ?? 0}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="col-span-3 text-center text-stone-500 mt-10">
+                No posts yet
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </>
   );
