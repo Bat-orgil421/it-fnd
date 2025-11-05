@@ -7,8 +7,9 @@ import { Post, User } from "../types";
 import { useUser } from "../providers/UserProvider";
 import Link from "next/link";
 import { Heart, MessageCircle } from "lucide-react";
+import { AxiosError } from "axios";
 
-const Page = ({ post }: { post: Post }) => {
+const Page = () => {
   const { username } = useParams();
   const [usere, setUsere] = useState<User | null>(null);
   const [isNotFound, setIsNotFound] = useState(false);
@@ -29,8 +30,10 @@ const Page = ({ post }: { post: Post }) => {
         setUsere(userRes.data);
         const postRes = await axios.get<Post[]>(`/posts/users/${username}`);
         setPosts(postRes.data);
-      } catch (err: any) {
-        if (err.response?.status === 404) setIsNotFound(true);
+      } catch (err) {
+        const axiosErr = err as AxiosError;
+
+        if (axiosErr.response?.status === 404) setIsNotFound(true);
         console.error(err);
       } finally {
         setLoading(false);
