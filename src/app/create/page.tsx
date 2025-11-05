@@ -39,7 +39,7 @@ const Page = () => {
         },
         {
           headers: {
-            Authorization: "Bearer " + process.env.NEXT_PUBLIC_HF_API_KEY,
+            Authorization: "Bearer " + "http://localhost:3100",
             "Content-Type": "application/json",
             Accept: "image/jpeg", // important: request image format
           },

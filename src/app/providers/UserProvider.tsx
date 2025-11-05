@@ -23,7 +23,7 @@ export const UserContextProvider = ({ children }: React.PropsWithChildren) => {
 
   const authenticateUser = async () => {
     setLoading(true);
-    const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/me", {
+    const response = await fetch("http://localhost:3100/me", {
       headers: {
         Authorization: "Bearer " + token,
       },
