@@ -28,7 +28,7 @@ const Page = () => {
       setGenerating(true);
 
       const response = await axios.post(
-        "/api/hf/models/stabilityai/stable-diffusion-xl-base-1.0",
+        "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
         {
           inputs: prompt,
           parameters: {
@@ -39,7 +39,7 @@ const Page = () => {
         },
         {
           headers: {
-            Authorization: "Bearer " + "https://in-bnd.vercel.app",
+            Authorization: "Bearer " + process.env.NEXT_PUBLIC_HF_API_KEY,
             "Content-Type": "application/json",
             Accept: "image/jpeg", // important: request image format
           },
