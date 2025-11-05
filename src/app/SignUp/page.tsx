@@ -24,7 +24,7 @@ const SingInPage = () => {
   }
 
   const handleSignin = async () => {
-    const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/signup", {
+    const response = await axios.post("https://in-bnd.vercel.app/signup", {
       credential,
       password,
       fullname,
