@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async rewrites() {
+    return [
+      {
+        source: "/api/hf/:path*",
+        destination: "https://api-inference.huggingface.co/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

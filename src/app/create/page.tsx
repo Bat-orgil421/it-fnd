@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import Image from "next/image";
-import { useAxios } from "../hooks/useaxios"
+import { useAxios } from "../hooks/useaxios";
 
 const Page = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -28,7 +28,7 @@ const Page = () => {
       setGenerating(true);
 
       const response = await axios.post(
-        "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
+        "/api/hf/models/stabilityai/stable-diffusion-xl-base-1.0",
         {
           inputs: prompt,
           parameters: {
