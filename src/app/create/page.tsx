@@ -103,7 +103,10 @@ const Page = () => {
       const { url: imageUrl } = await uploadResponse.json();
 
       // Create post with the uploaded image URL
-      const response = await axios.post("/posts", { imageUrl, description });
+      const response = await axios.post("https://in-bnd.vercel.app/posts", {
+        imageUrl,
+        description,
+      });
 
       console.log(response);
 

@@ -30,7 +30,10 @@ export const PostCard = ({ post }: { post: Post }) => {
   }, [user]);
 
   const handleSubmitComment = async () => {
-    const response = await axios.post(`/posts/${post._id}/comments`, { text });
+    const response = await axios.post(
+      `https://in-bnd.vercel.app/posts/${post._id}/comments`,
+      { text }
+    );
 
     if (response.status === 200) {
       setText("");
@@ -61,7 +64,9 @@ export const PostCard = ({ post }: { post: Post }) => {
         <div
           className="hover:opacity-60 cursor-pointer"
           onClick={async () => {
-            const response = await axios.post(`/posts/${post._id}/like`);
+            const response = await axios.post(
+              `https://in-bnd.vercel.app/posts/${post._id}/like`
+            );
             setIsLiked(response.data.isLiked);
 
             if (response.data.isLiked) {
