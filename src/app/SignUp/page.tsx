@@ -25,7 +25,7 @@ const SingInPage = () => {
   }
 
   const handleSignin = async () => {
-    const response = await axios.post("http://localhost:3100/signup", {
+    const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + "/signup", {
       credential,
       password,
       fullname,

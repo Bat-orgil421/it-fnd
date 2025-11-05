@@ -4,7 +4,6 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAxios } from "../hooks/useaxios";
 import { Post, User } from "../types";
-import Image from "next/image";
 import { useUser } from "../providers/UserProvider";
 import Link from "next/link";
 
@@ -90,7 +89,7 @@ const Page = ({ post }: { post: Post }) => {
             )}
           </div>
         </div>
-        
+
       </div>
     </>
   );

@@ -14,7 +14,7 @@ export default function Home() {
   const { user, loading } = useContext(UserContext);
 
   useEffect(() => {
-    fetch("http://localhost:3100/posts")
+    fetch(process.env.NEXT_PUBLIC_API_URL + "/posts")
       .then((res) => res.json())
       .then((data) => {
         setPosts(data);
