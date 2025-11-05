@@ -24,7 +24,7 @@ const SingInPage = () => {
   }
 
   const handleSignin = async () => {
-    const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/signin", {
+    const response = await fetch("https://in-bnd.vercel.app/signin", {
       headers: {
         "Content-Type": "application/json",
       },
