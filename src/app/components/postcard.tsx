@@ -66,29 +66,7 @@ export const PostCard = ({ post }: { post: Post }) => {
   };
 
   const renderUsernameWithBadge = (u: any) => (
-    <div className="flex gap-1 items-center">
-      <b>{u.username}</b>
-      <span className="flex items-center gap-1">
-        {u.username === "wilvurson" && (
-          <>
-            <BadgeCheck className="w-4 h-4 blue-glow" />
-            <Heart className="w-4 h-4 blue-cyan-glow" />
-          </>
-        )}
-        {u.username === "elizxyx" && (
-          <>
-            <BadgeCheck className="w-4 h-4 blue-glow" />
-            <Heart className="w-4 h-4 blue-cyan-glow" />
-          </>
-        )}
-        {u.username !== "wilvurson" &&
-          u.username !== "elizxyx" &&
-          u.followers &&
-          u.followers.length >= 10 && (
-            <BadgeCheck className="w-4 h-4 blue-glow" />
-          )}
-      </span>
-    </div>
+    <div className="flex gap-1 items-center"></div>
   );
 
   return (
@@ -164,7 +142,7 @@ export const PostCard = ({ post }: { post: Post }) => {
               {post.imageUrl ? (
                 <img
                   src={post.imageUrl}
-                  alt="Post image" 
+                  alt="Post image"
                   className="max-h-full w-auto object-contain rounded-lg"
                 />
               ) : (
@@ -176,12 +154,12 @@ export const PostCard = ({ post }: { post: Post }) => {
               <div className="flex flex-col overflow-y-auto p-2 space-y-3 max-h-[70vh]">
                 {comments.map((comment) => (
                   <div key={comment._id} className="flex gap-2 items-start">
-                    <div className="flex text-stone-300 text-sm break-words">
-                      <div className="flex gap-2 items-center font-mi">
-                        {renderUsernameWithBadge(comment.createdBy)}
+                    <div className="flex flex-col text-stone-300 ">
+                      <div className="flex gap-2">
+                        <div className="font-bold">{post.createdBy.username}</div>
+                        <div>{comment.text}</div>
                       </div>
-                      <div>{comment.text}</div>
-                      <span className="text-stone-500 text-xs">
+                      <span className="text-stone-500 text-sm">
                         {dayjs(comment.createdAt).fromNow()}
                       </span>
                     </div>
