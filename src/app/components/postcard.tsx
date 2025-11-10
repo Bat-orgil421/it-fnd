@@ -64,10 +64,7 @@ export const PostCard = ({ post }: { post: Post }) => {
       toast.error("Алдаа гарлаа");
     }
   };
-
-  const renderUsernameWithBadge = (u: any) => (
-    <div className="flex gap-1 items-center"></div>
-  );
+  
 
   return (
     <div key={post._id} className="py-4 border-b border-zinc-800">
