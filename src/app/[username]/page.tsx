@@ -21,27 +21,7 @@ const Page = () => {
   const axios = useAxios();
   const { user: currentUser } = useUser();
 
-  useEffect(() => {
-    if (!username) return;
 
-    const fetchProfile = async () => {
-      try {
-        const userRes = await axios.get(`/users/${username}`);
-        setUsere(userRes.data);
-        const postRes = await axios.get<Post[]>(`/posts/users/${username}`);
-        setPosts(postRes.data);
-      } catch (err) {
-        const axiosErr = err as AxiosError;
-
-        if (axiosErr.response?.status === 404) setIsNotFound(true);
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProfile();
-  }, [username]);
 
   useEffect(() => {
     axios
@@ -77,7 +57,7 @@ const Page = () => {
                 <div className="text-sm font-medium">{usere?.fullname}</div>
               </div>
               <div className="flex flex-row justify-between w-70 text-xs font-medium">
-                <div>posts</div>
+                <div>{posts.length} posts</div>
                 <div>followers</div>
                 <div>following</div>
               </div>
@@ -98,7 +78,7 @@ const Page = () => {
                 <button
                   onClick={async () => {
                     const response = await axios.post(
-                      `/users/${usere?.username}/follow`
+                      `https://in-bnd.vercel.app/users/${usere?.username}/follow`
                     );
                   }}
                   className={`rounded-sm font-semibold cursor-pointer ${

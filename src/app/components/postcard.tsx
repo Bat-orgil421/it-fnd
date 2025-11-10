@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Heart, MessageCircle } from "lucide-react";
+import { BadgeCheck, Heart, MessageCircle, Trash2, X } from "lucide-react";
 import { useAxios } from "../hooks/useaxios";
 import { useUser } from "../providers/UserProvider";
 import Link from "next/link";
@@ -12,6 +12,7 @@ dayjs.extend(relativeTime);
 
 export const PostCard = ({ post }: { post: Post }) => {
   const [isLiked, setIsLiked] = useState(false);
+  const [showAllComments, setShowAllComments] = useState(false);
   const [likeCount, setLikeCount] = useState(post.likes.length);
   const [totalComments, setTotalComments] = useState(0);
 
@@ -29,6 +30,27 @@ export const PostCard = ({ post }: { post: Post }) => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (showAllComments) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [showAllComments]);
+
+  const handlelike = async () => {
+    const response = await axios.post(
+      `https://in-bnd.vercel.app/posts/${post._id}/like`
+    );
+    setIsLiked(response.data.isLiked);
+
+    if (response.data.isLiked) {
+      setLikeCount(likeCount + 1);
+    } else {
+      setLikeCount(likeCount - 1);
+    }
+  };
+
   const handleSubmitComment = async () => {
     const response = await axios.post(
       `https://in-bnd.vercel.app/posts/${post._id}/comments`,
@@ -42,6 +64,32 @@ export const PostCard = ({ post }: { post: Post }) => {
       toast.error("Алдаа гарлаа");
     }
   };
+
+  const renderUsernameWithBadge = (u: any) => (
+    <div className="flex gap-1 items-center">
+      <b>{u.username}</b>
+      <span className="flex items-center gap-1">
+        {u.username === "wilvurson" && (
+          <>
+            <BadgeCheck className="w-4 h-4 blue-glow" />
+            <Heart className="w-4 h-4 blue-cyan-glow" />
+          </>
+        )}
+        {u.username === "elizxyx" && (
+          <>
+            <BadgeCheck className="w-4 h-4 blue-glow" />
+            <Heart className="w-4 h-4 blue-cyan-glow" />
+          </>
+        )}
+        {u.username !== "wilvurson" &&
+          u.username !== "elizxyx" &&
+          u.followers &&
+          u.followers.length >= 10 && (
+            <BadgeCheck className="w-4 h-4 blue-glow" />
+          )}
+      </span>
+    </div>
+  );
 
   return (
     <div key={post._id} className="py-4 border-b border-zinc-800">
@@ -61,24 +109,13 @@ export const PostCard = ({ post }: { post: Post }) => {
         />
       </div>
       <div className="flex items-center gap-3 py-2">
-        <div
-          className="hover:opacity-60 cursor-pointer"
-          onClick={async () => {
-            const response = await axios.post(
-              `https://in-bnd.vercel.app/posts/${post._id}/like`
-            );
-            setIsLiked(response.data.isLiked);
-
-            if (response.data.isLiked) {
-              setLikeCount(likeCount + 1);
-            } else {
-              setLikeCount(likeCount - 1);
-            }
-          }}
-        >
+        <div className="hover:opacity-60 cursor-pointer" onClick={handlelike}>
           {isLiked ? <Heart fill="red" stroke="red" /> : <Heart />}
         </div>
-        <div>
+        <div
+          className="hover:opacity-60 cursor-pointer"
+          onClick={() => setShowAllComments(true)}
+        >
           <MessageCircle size={24} />
         </div>
       </div>
@@ -96,7 +133,7 @@ export const PostCard = ({ post }: { post: Post }) => {
       {comments.length > 1 && (
         <div
           onClick={() => {
-            setTotalComments(100);
+            setShowAllComments(true);
           }}
           className="hover:underline cursor-pointer text-neutral-400 text-sm"
         >
@@ -120,6 +157,75 @@ export const PostCard = ({ post }: { post: Post }) => {
           </div>
         )}
       </div>
+      {showAllComments && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-2">
+          <div className="bg-neutral-800 w-full max-w-md md:max-w-4xl h-150 overflow-hidden rounded-lg flex flex-col md:flex-row">
+            <div className="w-full md:w-4/5 flex justify-center items-center bg-black">
+              {post.imageUrl ? (
+                <img
+                  src={post.imageUrl}
+                  alt="Post image" 
+                  className="max-h-full w-auto object-contain rounded-lg"
+                />
+              ) : (
+                <div className="text-stone-500 p-4">No image to show</div>
+              )}
+            </div>
+
+            <div className="md:w-1/2 w-full flex flex-col">
+              <div className="flex flex-col overflow-y-auto p-2 space-y-3 max-h-[70vh]">
+                {comments.map((comment) => (
+                  <div key={comment._id} className="flex gap-2 items-start">
+                    <div className="flex text-stone-300 text-sm break-words">
+                      <div className="flex gap-2 items-center font-mi">
+                        {renderUsernameWithBadge(comment.createdBy)}
+                      </div>
+                      <div>{comment.text}</div>
+                      <span className="text-stone-500 text-xs">
+                        {dayjs(comment.createdAt).fromNow()}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="px-2 py-2">
+                <div className="flex items-center gap-3 py-2">
+                  <div
+                    className="hover:opacity-60 cursor-pointer"
+                    onClick={handlelike}
+                  >
+                    {isLiked ? <Heart fill="red" stroke="red" /> : <Heart />}
+                  </div>
+                </div>
+                <div className="text-sm font-bold mb-1">{likeCount} likes</div>
+              </div>
+              <div className="px-2 py-2 border-t border-stone-700 flex items-center gap-2">
+                <textarea
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="Add a comment..."
+                  className="flex-1 resize-none text-sm text-white placeholder-stone-500 focus:outline-none"
+                  rows={1}
+                />
+                {text.length > 0 && (
+                  <div
+                    onClick={handleSubmitComment}
+                    className="text-stone-400 font-semibold text-sm cursor-pointer hover:text-white"
+                  >
+                    Post
+                  </div>
+                )}
+                <button
+                  className="text-stone-400 hover:text-white cursor-pointer"
+                  onClick={() => setShowAllComments(false)}
+                >
+                  <X />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

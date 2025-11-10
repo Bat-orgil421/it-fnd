@@ -10,6 +10,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import Image from "next/image";
 import { useAxios } from "../hooks/useaxios";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 
 const Page = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -137,12 +138,12 @@ const Page = () => {
         </Button>
       </div>
       <div className="py-4 flex flex-col gap-4 dark">
-        <div defaultValue="upload">
-          <div>
-            <button value="upload">Upload image</button>
-            <button value="generate">Generate image</button>
-          </div>
-          <button value="upload">
+        <Tabs defaultValue="upload">
+          <TabsList>
+            <TabsTrigger value="upload">Upload image</TabsTrigger>
+            <TabsTrigger value="generate">Generate image</TabsTrigger>
+          </TabsList>
+          <TabsContent value="upload">
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="file-upload"
@@ -174,8 +175,8 @@ const Page = () => {
                 className="hidden"
               />
             </div>
-          </button>
-          <button value="generate">
+          </TabsContent>
+          <TabsContent value="generate">
             <div className="flex gap-4">
               <Input
                 disabled={generating}
@@ -199,8 +200,8 @@ const Page = () => {
                 </div>
               )}
             </div>
-          </button>
-        </div>
+          </TabsContent>
+        </Tabs>
         {/* File input */}
 
         <Textarea

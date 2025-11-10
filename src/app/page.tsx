@@ -7,6 +7,7 @@ import { Post } from "./types";
 import { PostCard } from "./components/postcard";
 import { Instagram, Plus } from "lucide-react";
 import Link from "next/link";
+import { Spinner } from "@/components/spin";
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -21,7 +22,9 @@ export default function Home() {
   }, []);
 
   if (loading) {
-    return <>Loading....</>;
+    return <> 
+    <Spinner/>
+     Loading....</>;
   }
 
   if (!user) {
