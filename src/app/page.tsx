@@ -22,9 +22,14 @@ export default function Home() {
   }, []);
 
   if (loading) {
-    return <> 
-    <Spinner/>
-     Loading....</>;
+    return (
+      <>
+        <div className="w-full h-screen flex items-center justify-center">
+          <Spinner />
+          Loading....
+        </div>
+      </>
+    );
   }
 
   if (!user) {
@@ -32,12 +37,14 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-row ">
+    <div className="flex flex-row">
       <div className="fixed top-0 left-0 w-[73] h-screen bg-black flex flex-row justify-center border-r-1 border-neutral-800">
-        <div className="mt-9 mb-9 ">
-          <Instagram size={24} />
+        <div className="mt-9 mb-9">
+          <Instagram size={27} />
           <Link href={"/create"}>
-            <Plus size={24} className="mt-8" />
+            <Plus size={27} className="mt-8" />
+            <Link href={"/username"}>
+            <div  className="w-8 h-8 bg-white rounded-full mt-8"></div></Link>
           </Link>
         </div>
       </div>

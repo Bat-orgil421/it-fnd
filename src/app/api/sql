@@ -1,0 +1,93 @@
+5 SELECT * from userin WHERE gender='F';
+6 SELECT * from userin WHERE age=16;
+7 SELECT * from userin where age>=17;
+8 SELECT * from userin where firstname='John';
+9 SELECT * from userin where firstname LIKE 'J%'; 
+10 UPDATE userin set age = 18 WHERE firstname='John';
+11 UPDATE userin set lastname = 'Marston' WHERE firstname='John';
+12 DELETE FROM userin WHERE  gender='M' AND age=16;
+13 DELETE FROM userin WHERE firstname='Ethan';
+
+14 ALTER TABLE userin 
+ADD grade INT 
+
+15 UPDATE userin
+SET grade = age;
+
+16 ALTER TABLE userin
+DROP COLUMN grade
+
+17 DELETE FROM userin;
+
+18 DROP TABLE userin;
+
+19 DROP TABLE userin;
+SELECT id, firstname, lastname, age, gender
+FROM userin 
+ORDER BY age ASC
+
+20 
+
+21 SELECT * FROM userin 
+WHERE age BETWEEN 16 AND 18
+
+22 UPDATE userin
+SET age = age + 1;
+
+23 SELECT *
+FROM userin
+WHERE age = (SELECT MAX(age) FROM userin);
+
+24 SELECT *
+FROM userin
+WHERE gender='F' 
+ORDER BY age ASC
+LIMIT 1
+
+25 SELECT COUNT(*) FROM userin
+
+(=======================)
+
+1 ALTER table classes
+ADD teacher VARCHAR(100)
+
+2 ALTER table classes
+ADD capacity INT
+
+3 ALTER TABLE classes ALTER COLUMN room TYPE VARCHAR(10)
+
+4 
+
+5 ALTER TABLE classes 
+DROP COLUMN teacher
+
+6 ALTER TABLE classes 
+ADD COLUMN created_at DATE
+
+7 
+
+8 ALTER TABLE classes 
+DROP COLUMN created_at
+
+9 
+
+10 
+
+11 SELECT COUNT(*) FROM userin
+
+12 SELECT * from classes where room LIKE '1%'; 
+
+13 SELECT * from classes where name LIKE '%A'; 
+
+14 SELECT *
+FROM classes
+ORDER BY room ASC
+LIMIT 1
+
+15 SELECT *
+FROM classes
+ORDER BY room DESC
+LIMIT 1
+
+17 SELECT COUNT(*) FROM classes WHERE name LIKE 'A%'
+

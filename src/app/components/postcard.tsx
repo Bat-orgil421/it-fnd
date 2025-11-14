@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { BadgeCheck, Heart, MessageCircle, Trash2, X } from "lucide-react";
+import { Heart, MessageCircle, X } from "lucide-react";
 import { useAxios } from "../hooks/useaxios";
 import { useUser } from "../providers/UserProvider";
 import Link from "next/link";
@@ -64,7 +64,6 @@ export const PostCard = ({ post }: { post: Post }) => {
       toast.error("Алдаа гарлаа");
     }
   };
-  
 
   return (
     <div key={post._id} className="py-4 border-b border-zinc-800">

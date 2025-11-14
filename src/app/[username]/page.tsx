@@ -21,8 +21,6 @@ const Page = () => {
   const axios = useAxios();
   const { user: currentUser } = useUser();
 
-
-
   useEffect(() => {
     axios
       .get(`/users/${username}`)
